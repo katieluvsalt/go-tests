@@ -1,0 +1,10 @@
+---
+applications:
+- name: microservicesCloud
+  path: .
+  instances: 1
+  random-route: true
+  memory: 128M
+  disk_quota: 1024M
+  command: microservicesCloud
+  buildpack: https://github.com/cloudfoundry/go-buildpack

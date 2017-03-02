@@ -1,0 +1,152 @@
+swagger: '2.0'
+info:
+  version: '0.0.01'
+  title: AMC Applicant API
+  description: An API for acting on AMC's applicant resourse
+  termsOfService: TBD
+  contact:
+    name: Accenture AMC Team
+    email: barrie.pfeifer@accenture.com
+    url: TBD
+  license:
+    name: TBD
+    url: TBD
+host: localhost
+# This is for a microservice, and so the path should only be accessing one resource
+basePath: /amc/tbd/v0/applicants
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /:
+    post:
+      description: Creates a new applicant.  Duplicates are not allowed
+      operationId: addApplicant
+      produces:
+        - application/json
+      parameters:
+        - name: applicant
+          in: body
+          description: Applicant to create
+          required: true
+          schema:
+            $ref: '#/definitions/applicantNew'
+      responses:
+        '200':
+          description: applicant response
+          schema:
+            $ref: '#/definitions/applicant'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    get:
+      description: Returns all applicants from the system
+      operationId: findApplicants
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: applicants response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/applicant'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /{id}:
+    get:
+      description: Returns an applicant based on an applicant ID
+      operationId: findApplicantById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of applicant to fetch
+          required: true
+          type: string
+      responses:
+        '200':
+          description: pet response
+          schema:
+            $ref: '#/definitions/applicant'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    delete:
+      description: deletes a single applicant based on the ID supplied
+      operationId: deleteApplicant
+      parameters:
+        - name: id
+          in: path
+          description: ID of applicant to delete
+          required: true
+          type: string
+      responses:
+        '204':
+          description: applicant deleted
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+
+definitions:
+
+  party:
+    description: AMC party data model
+    type: object
+    required:
+      - id
+      - name
+      - surname
+      - birthdate
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      surname:
+        type: string
+      birthdate:
+        type: string
+        format: date
+      creationDate:
+        type: string
+        format: datetime
+
+  applicant:
+    allOf:
+      - $ref: '#/definitions/party'
+
+  applicantNew:
+    description: 3rd party formatted details to create a new applicant from
+    type: object
+    required:
+      - rawType
+      - raw
+    properties:
+      rawType:
+        description: the type of raw data, e.g. "authenticID"
+        type: string
+      raw:
+        description: the raw data as received from the authentication service
+        type: object
+
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
