@@ -1,19 +1,19 @@
 swagger: '2.0'
 info:
-  version: '0.0.01'
-  title: AMC Applicant API
-  description: An API for acting on AMC's applicant resourse
-  termsOfService: TBD
-  contact:
-    name: Accenture AMC Team
-    email: barrie.pfeifer@accenture.com
-    url: TBD
-  license:
-    name: TBD
-    url: TBD
+  version: ''
+  title: ''
+  description: ''
+  termsOfService: ''
+  contact: ''
+    name: ''
+    email: ''
+    url: ''
+  license: ''
+    name: ''
+    url: ''
 host: localhost
-# This is for a microservice, and so the path should only be accessing one resource
-basePath: /amc/tbd/v0/applicants
+
+basePath: /
 schemes:
   - https
 consumes:
@@ -100,7 +100,7 @@ paths:
 definitions:
 
   party:
-    description: AMC party data model
+    description: party data model
     type: object
     required:
       - id
@@ -133,7 +133,7 @@ definitions:
       - raw
     properties:
       rawType:
-        description: the type of raw data, e.g. "authenticID"
+        description: the type of raw data,
         type: string
       raw:
         description: the raw data as received from the authentication service
